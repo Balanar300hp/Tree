@@ -315,7 +315,7 @@ fstream & operator >> (fstream &file,Tree<NODETYPE> & x) {
 		return file;
 	}
 }
-int main()
+/*int main()
 {
 	Tree<int> intTree;           /* создаем новой бинароное дерево с ключем типа int */
 	int a;
@@ -327,11 +327,11 @@ int main()
 	}
 
 	intTree.inorder_walk(intTree.get_root());
-	cout << "Enter node value U want to delete:";     /* попробуем удалить узел с ключем a */
+	cout << "Enter node value want to delete:";     /* попробуем удалить узел с ключем a */
 	cin >> a;
 	intTree.delete_node(intTree.find(intTree.get_root(), a));    /* если их несколько, то удалится первый найденный */
-	cout << endl << "Now inorder_walk:" << endl;
+	cout << endl << "Now:" << endl;
 	intTree.inorder_walk(intTree.get_root());       /* посмотрим на результат */
 	system("pause");
 }
-
+*/
