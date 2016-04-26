@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include <memory>
 #include "iostream"
 using namespace std;
@@ -21,7 +22,7 @@ class TreeNode
 {
 	friend class Tree<NODETYPE>;
 public:
-	TreeNode(const NODETYPE &);
+	TreeNode(const NODETYPE &a) :data(a), right(nullptr), left(nullptr) {};
 	NODETYPE get_data();
 protected:
 	TreeNode* left;           /* указатель на левого ребенка */
@@ -30,12 +31,7 @@ protected:
 	NODETYPE data;            /* ключ */
 };
 
-template<class NODETYPE>
-TreeNode <NODETYPE>::TreeNode(const NODETYPE &a)
-{
-	data = a;
-	left = right = 0;
-}
+
 template <class NODETYPE>
 NODETYPE TreeNode <NODETYPE>::get_data()
 {
@@ -51,7 +47,9 @@ template <class NODETYPE>
 class Tree
 {
 public:
-	Tree();                                                    /* конструктор */
+	Tree() :root(nullptr) {};    
+	int count;
+	Tree(int k) : root(nullptr),count(k) {};/* конструктор */
 	int insert_node(const NODETYPE &);                         /* вставляет узел */
 	TreeNode<NODETYPE>* delete_node(TreeNode<NODETYPE> *);     /* удаляет узел */
 	TreeNode<NODETYPE>* find(TreeNode<NODETYPE>*, const NODETYPE &);	/*поиск */
@@ -61,28 +59,23 @@ public:
 	TreeNode<NODETYPE>* find_max(TreeNode<NODETYPE>*);         /* находит узел с минимальным значением ключа и возвращает указатель на него */
 	TreeNode<NODETYPE>* find_min(TreeNode<NODETYPE>*);
 
-	friend		ostream & operator<< <>(ostream &output, Tree &);	
-	friend		istream & operator >> <>(istream &input, Tree &);		
-	friend		fstream & operator<< <>(fstream &file, Tree<NODETYPE> &);		
-	friend		fstream & operator >> <>(fstream &file, Tree<NODETYPE> &);
+	friend	ostream & operator << <>(ostream &output, Tree &);
+	friend	istream & operator >> <>(istream &input, Tree &);
+	friend	fstream & operator << <>(fstream &file, Tree<NODETYPE> &);
+	friend	fstream & operator >> <>(fstream &file, Tree<NODETYPE> &);
 
 private:
 	TreeNode<NODETYPE> *root;                                  /*корень */
-
+	bool print(const TreeNode<NODETYPE>&, ostream &);
 };
 
-template<class NODETYPE>
-Tree<NODETYPE>::Tree()
-{
-	root = 0;
-}
 
 template<class NODETYPE>
 int Tree<NODETYPE>::insert_node(const NODETYPE &x)
 {
 	TreeNode<NODETYPE>* n = new TreeNode<NODETYPE>(x);  /* создаем новый узел, его мы будем вставлять */
 	TreeNode<NODETYPE>* ptr;
-	TreeNode<NODETYPE>* ptr1=0;
+	TreeNode<NODETYPE>* ptr1 = 0;
 
 	n->parent = n->left = n->right = 0;          /* он - лист */
 	ptr = root;
@@ -95,7 +88,7 @@ int Tree<NODETYPE>::insert_node(const NODETYPE &x)
 			ptr = ptr->right;   /* справа - больше */
 	}
 	n->parent = ptr1;
-	if (ptr1 == 0)                       /* дерево было пусто? */
+	if (ptr1 == 0)                       
 		root = n;
 	else
 	{
@@ -141,8 +134,7 @@ TreeNode<NODETYPE>* Tree<NODETYPE>::delete_node(TreeNode<NODETYPE> *z)
 }
 
 template<class NODETYPE>
-TreeNode<NODETYPE>* Tree<NODETYPE>::find(TreeNode<NODETYPE>* n,
-	const NODETYPE & val)
+TreeNode<NODETYPE>* Tree<NODETYPE>::find(TreeNode<NODETYPE>* n,const NODETYPE & val)
 {
 	if (n == 0 || val == n->get_data())
 		return n;
@@ -201,137 +193,80 @@ TreeNode<NODETYPE>* Tree<NODETYPE>::find_min(TreeNode<NODETYPE>* x)
 		x = x->left;
 	return x;
 }
-template <typename T>	// WORKS
-ostream & operator <<(ostream & os, BinarySearchTree<T> & x) {
-	if (x.root == nullptr) {
-		throw std::logic_error("Empty tree");
-	}
-	x.print(x.root, os);
+
+
+template <typename NODETYPE>	
+ostream & operator <<(ostream & os, const Tree<NODETYPE> & x) {
+	
+	x.print(x.get_root(), os);
 
 	return os;
-}
-
-template <typename T>	// WORKS
-istream & operator >> (istream & input, BinarySearchTree<T> & x) {
-	T temp;
-	if (x.count == 0) {
-		throw std::logic_error("Empty tree");
-	}
-	else {
-		for (size_t i = 0; i < x.count; ++i) {
-			if (input >> temp) {
-				x.insert(temp);
-			}
-			else {
-				throw std::logic_error("Error in input stream");
-			}
-		}
-		return input;
-	}
-}
-
-template <typename T>	//WORKS
-fstream & operator <<(fstream &file, BinarySearchTree<T> & x) {
-	if (x.count == 0) {
-		throw std::logic_error("Empty tree");
-	}
-	x.print(x.root, file);
-
-	return file;
-}
-
-template <typename template <typename NODETYPE>	// WORKS
-ostream & operator <<(ostream & os, Tree<NODETYPE> & x) {
-	if (x.root == nullptr) {
-		throw std::logic_error("Empty tree");
-	}
-	x.print(x.root, os);
-
-	return os;
-}
-
-template <typename NODETYPE>	// WORKS
-istream & operator >> (istream & input, Tree<NODETYPE> & x) {
-	T temp;
-	if (x.count == 0) {
-		throw std::logic_error("Empty tree");
-	}
-	else {
-		for (size_t i = 0; i < x.count; ++i) {
-			if (input >> temp) {
-				x.insert(temp);
-			}
-			else {
-				throw std::logic_error("Error in input stream");
-			}
-		}
-		return input;
-	}
-}
-
-template <typename NODETYPE>	//WORKS
-fstream & operator <<(fstream &file, Tree<NODETYPE> & x) {
-	if (x.count == 0) {
-		throw std::logic_error("Empty tree");
-	}
-	x.print(x.root, file);
-
-	return file;
 }
 
 template <typename NODETYPE>	
-fstream & operator >> (fstream &file, Tree<NODETYPE> & x) {
-	T temp;
-	if (x.count == 0) {
-		throw std::logic_error("Empty tree");
-	}
-	else {
-		for (size_t i = 0; i < x.count; ++i) {
-			if (file >> temp) {
-				x.insert(temp);
-			}
-			else {
-				throw std::logic_error("Error in input stream");
-			}
+istream & operator >> (istream & input, Tree<NODETYPE> & x) {
+	Tree<NODETYPE> temp;
+
+	
+		for (int i = 0; i < x.count; ++i) {
+			
+				if (input >> temp) {
+					x.insert_node(temp);
+				}
 		}
-		return file;
-	}
-};
-template <typename NODETYPE>
-fstream & operator >> (fstream &file,Tree<NODETYPE> & x) {
-	T temp;
-	if (x.count == 0) {
-		throw std::logic_error("Empty tree");
-	}
-	else {
-		for (size_t i = 0; i < x.count; ++i) {
-			if (file >> temp) {
-				x.insert(temp);
-			}
-			else {
-				throw std::logic_error("Error in input stream");
-			}
-		}
-		return file;
-	}
-}
-/*int main()
-{
-	Tree<int> intTree;           /* создаем новой бинароное дерево с ключем типа int */
-	int a;
-	cout << "10 numbers:" << endl;   /* заполняем его */
-	for (int i = 0; i<10; i++)
-	{
-		cin >> a;
-		intTree.insert_node(a);
+		return input;
 	}
 
-	intTree.inorder_walk(intTree.get_root());
-	cout << "Enter node value want to delete:";     /* попробуем удалить узел с ключем a */
-	cin >> a;
-	intTree.delete_node(intTree.find(intTree.get_root(), a));    /* если их несколько, то удалится первый найденный */
-	cout << endl << "Now:" << endl;
-	intTree.inorder_walk(intTree.get_root());       /* посмотрим на результат */
-	system("pause");
+
+template <typename NODETYPE>	
+fstream & operator <<(fstream &file, Tree<NODETYPE> & x) {
+	
+	x.print(x.get_root(), file);
+
+	return file;
 }
-*/
+template <typename NODETYPE>	
+fstream & operator >> (fstream &file, Tree<NODETYPE> & x) {
+	Tree<NODETYPE> temp;
+
+	for (size_t i = 0; i < x.count; ++i) {
+
+		if (file >> temp) {
+			x.insert_node(temp);
+
+		}
+		return file;
+	}
+}
+
+	template <typename NODETYPE>	
+	bool Tree<NODETYPE>::print(const TreeNode<NODETYPE> &m_node, ostream & os) {
+		if (m_node == nullptr) {
+			return true;
+		}
+		print(m_node->left, os);
+		os << m_node->data << endl;
+		print(m_node->right, os);
+	}
+
+int main()
+{
+Tree<int> intTree(10);
+int a;
+cout << "10 numbers:" << endl;
+for (int i = 0; i<10; i++)
+{
+cin >> a;
+intTree.insert_node(a);
+}
+
+intTree.inorder_walk(intTree.get_root());
+cout << "Enter node value want to delete:";
+cin >> a;
+intTree.delete_node(intTree.find(intTree.get_root(), a));
+cout << endl << "Now:" << endl;
+intTree.inorder_walk(intTree.get_root());
+cout << endl << "Search:" << endl;
+system("pause");
+}
+
