@@ -1,4 +1,4 @@
-#include "tree.h" 
+#include "tree.h"  
 template <class T>
 Tree<T>::der::der(T x) : D(x), l(nullptr), r(nullptr){}
 template <class T>
