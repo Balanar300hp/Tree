@@ -1,8 +1,8 @@
 cmake_minimum_required(VERSION 2.8)
 
-set(TESTS_FOR_PROJECT binary-search-tree)
+set(TESTS_FOR_PROJECT tree)
 
-project(Tests)
+project(Tree)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
