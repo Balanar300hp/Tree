@@ -7,11 +7,11 @@ template <class T>
 	class Tree;
 
 template <class T>
-	ostream & operator<<(ostream & out,Tree<T> &tree);
+	ostream & operator<<(ostream & os,Tree<T> &x);
 template <class T>
-	fstream & operator<<(ofstream & fout,Tree<T> &tree);
+	fstream & operator<<(ofstream & fle,Tree<T> &x);
 template <class T>
-	fstream & operator >> (ifstream & fin,Tree<T> &tree);
+	fstream & operator >> (ifstream & file,Tree<T> &x);
 
 
 	//Класс исключений 
