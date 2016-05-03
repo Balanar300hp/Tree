@@ -4,14 +4,14 @@ using namespace std;
 
 
 template <class T>
-	class BinarySearchTree;
+	class Tree;
 
 template <class T>
-	bool operator<<(ostream & out, BinarySearchTree<T> &tree);
+	ostream & operator<<(ostream & out, BinarySearchTree<T> &tree);
 template <class T>
-	bool operator<<(ofstream & fout, BinarySearchTree<T> &tree);
+	fstream & operator<<(ofstream & fout, BinarySearchTree<T> &tree);
 template <class T>
-	bool operator >> (ifstream & fin, BinarySearchTree<T> &tree);
+	fstream & operator >> (ifstream & fin, BinarySearchTree<T> &tree);
 
 
 	//Класс исключений 
@@ -47,9 +47,9 @@ public:
 	Tree();
 	bool Insert(T x);// Добавление элемента 
 	bool Search(T x);// Поиск элемента 
-	friend bool operator<< <>(ostream &out, Tree<T> &tree);
-	friend bool operator<< <>(ofstream &fout, Tree<T> &tree);
-	friend bool operator>> <>(ifstream &fin, Tree<T> &tree);
+	friend ostream & operator<< <>(ostream &out, Tree<T> &tree);
+	friend fstream & operator<< <>(ofstream &fout, Tree<T> &tree);
+	friend fstream & operator>> <>(ifstream &fin, Tree<T> &tree);
 private:
 	class der;
 	der* root;//корень дерева
