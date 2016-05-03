@@ -70,12 +70,12 @@ template <class T>
 fstream & operator <<(fstream &file, Tree<T> & x) {
 	if (!file.is_open()) throw File_Not_Open();
 
-	T x;
+	T temp;
 	while (!file.eof()){
-		fin >> x;
-		if (x != -1)tree.Insert(x);
+		fin >> temp;
+		if (x != -1)tree.Insert(temp);
 		else break;
-	}
+	};
 
 	return file;
 }
@@ -87,7 +87,7 @@ fstream & operator >>(fstream &file, Tree<T> & x) {
 		throw Empty();
 	}
 	else {
-		x.root->print_file(fout)
+		x.root->print_file(file);
 		return file;
 	}
-
+}
