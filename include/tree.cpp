@@ -56,7 +56,7 @@ bool Tree<T>::Search(T x){
 	if (root == nullptr) throw Empty();
 	return(root->Search(x));
 }
-template <class T>	// WORKS
+template <class T>	
 ostream & operator <<(ostream & os, Tree<T> & x) {
 	if (x.root == nullptr) {
 		 throw Empty();
@@ -66,7 +66,7 @@ ostream & operator <<(ostream & os, Tree<T> & x) {
 	return os;
 }
 
-template <class T>	//WORKS
+template <class T>	
 fstream & operator <<(fstream &file, Tree<T> & x) {
 	if (!file.is_open()) throw File_Not_Open();
 
@@ -80,7 +80,7 @@ fstream & operator <<(fstream &file, Tree<T> & x) {
 	return file;
 }
 
-template <class T>	// WORKS
+template <class T>	
 fstream & operator >>(fstream &file, Tree<T> & x) {
 	T temp;
 	if (x.count == 0) {
