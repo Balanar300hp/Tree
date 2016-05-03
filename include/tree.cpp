@@ -56,24 +56,38 @@ bool Tree<T>::Search(T x){
 	if (root == nullptr) throw Empty();
 	return(root->Search(x));
 }
-template <class T>
-ostream & operator <<(ostream & out, Tree<T> & tree) {
-	if (tree.root->print_console()) return out;
-	else throw Empty();
+template <class T>	// WORKS
+ostream & operator <<(ostream & os, Tree<T> & x) {
+	if (x.root == nullptr) {
+		 throw Empty();
+	}
+	x.root->print_console();
+
+	return os;
 }
-template <class T>
-fstream & operator >>(ifstream & fin, Tree<T> & tree) {
-	if (!fin.is_open()) throw File_Not_Open();
+
+template <class T>	//WORKS
+fstream & operator <<(fstream &file, Tree<T> & x) {
+	if (!file.is_open()) throw File_Not_Open();
+
 	T x;
-	while (!fin.eof()){
+	while (!file.eof()){
 		fin >> x;
 		if (x != -1)tree.Insert(x);
 		else break;
 	}
-	return fin;
+
+	return file;
 }
-template <class T>
-fstream & operator <<(ofstream & fout, Tree<T> & tree) {
-	if (tree.root->print_file(fout)) return fout;
-	else throw Empty();
-}
+
+template <class T>	// WORKS
+fstream & operator >>(fstream &file, Tree<T> & x) {
+	T temp;
+	if (x.count == 0) {
+		throw Empty();
+	}
+	else {
+		x.root->print_file(fout)
+		return file;
+	}
+
