@@ -57,12 +57,12 @@ bool Tree<T>::Search(T x){
 	return(root->Search(x));
 }
 template <class T>
-bool operator <<(ostream & out, Tree<T> & tree) {
+ostream & operator <<(ostream & out, Tree<T> & tree) {
 	if (tree.root->print_console()) return true;
 	else throw Empty();
 }
 template <class T>
-bool operator >>(ifstream & fin, Tree<T> & tree) {
+fstream & operator >>(ifstream & fin, Tree<T> & tree) {
 	if (!fin.is_open()) throw File_Not_Open();
 	T x;
 	while (!fin.eof()){
@@ -73,7 +73,7 @@ bool operator >>(ifstream & fin, Tree<T> & tree) {
 	return true;
 }
 template <class T>
-bool operator <<(ofstream & fout, Tree<T> & tree) {
+fstream & operator <<(ofstream & fout, Tree<T> & tree) {
 	if (tree.root->print_file(fout)) return true;
 	else throw Empty();
 }
