@@ -54,7 +54,7 @@ REQUIRE(!tree.Search(2));
 }
 
 SCENARIO("Search_char", "[search_c]") {
-BinarySearchTree<char> tree;
+Tree<char> tree;
 tree.Insert(7);
 tree.Insert(5);
 tree.Insert(1);
