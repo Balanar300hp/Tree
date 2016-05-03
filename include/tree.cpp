@@ -72,8 +72,8 @@ fstream & operator <<(fstream &file, Tree<T> & x) {
 
 	T temp;
 	while (!file.eof()){
-		fin >> temp;
-		if (x != -1)tree.Insert(temp);
+		file >> temp;
+		if (x != -1) x.Insert(temp);
 		else break;
 	};
 
