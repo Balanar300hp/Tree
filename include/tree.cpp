@@ -58,7 +58,7 @@ bool Tree<T>::Search(T x){
 }
 template <class T>
 ostream & operator <<(ostream & out, Tree<T> & tree) {
-	if (tree.root->print_console()) return true;
+	if (tree.root->print_console()) return out;
 	else throw Empty();
 }
 template <class T>
@@ -70,10 +70,10 @@ fstream & operator >>(ifstream & fin, Tree<T> & tree) {
 		if (x != -1)tree.Insert(x);
 		else break;
 	}
-	return true;
+	return fin;
 }
 template <class T>
 fstream & operator <<(ofstream & fout, Tree<T> & tree) {
-	if (tree.root->print_file(fout)) return true;
+	if (tree.root->print_file(fout)) return fout;
 	else throw Empty();
 }
