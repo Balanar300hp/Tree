@@ -7,11 +7,11 @@ template <class T>
 	class Tree;
 
 template <class T>
-	ostream & operator<<(ostream & out, BinarySearchTree<T> &tree);
+	ostream & operator<<(ostream & out,Tree<T> &tree);
 template <class T>
-	fstream & operator<<(ofstream & fout, BinarySearchTree<T> &tree);
+	fstream & operator<<(ofstream & fout,Tree<T> &tree);
 template <class T>
-	fstream & operator >> (ifstream & fin, BinarySearchTree<T> &tree);
+	fstream & operator >> (ifstream & fin,Tree<T> &tree);
 
 
 	//Класс исключений 
